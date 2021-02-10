@@ -1,0 +1,98 @@
+<HTML>
+
+  <style type="text/css">
+  .intro { font-size:10pt; font-style:italic }
+  .heading { font-size:14pt; font-weight:bold; font-family:sans-serif }
+  .title { font-size:18pt; font-weight:bold; background-color:navy; color:white; text-align:center; font-family:sans-serif }
+  
+  </style>
+  <html lang = "es">
+  <head>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+     <title>RFID tracking</title>
+  </head>
+  <BODY style="overflow-y:hidden;margin: 0">
+      <div class="barra"><a style="color:#bdbdbd">.</a></div> 
+     <img src="Mapa.jpeg"  class="img">
+    
+     <a style="cursor:pointer;color:#000000;"onclick="playflag1=true" class="bt1">Agregar Lector</a>
+     <a style="cursor:pointer;color:#000000;"onclick="playflag=true" class="bt2"> Borrar Lector </a>
+     <a style="cursor:pointer;color:#000000;"onclick="nuevoelemento()" class="bt3">Agregar Activo</a>
+     <a style="cursor:pointer;color:#000000;"onclick="descargarregistro()" class="bt4">Descargar Registro</a>
+     <a style="cursor:pointer;color:#000000;"onclick="manual()"class="bt5">Manual de Usuario</a>
+     <a style="cursor:pointer;color:#000000;"class="bt6" onclick="permisos()">Permisos</a>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+     <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+       
+     
+  <SCRIPT>
+    const remote = require('electron').remote 	
+      const main = remote.require('./main.js')
+  /*______________________________________ Declaracion de Variables______________________*/
+  
+  var gridx = 59, gridy = 46;
+  var player = [], computer = [], playersships = [], computersships = [];
+  var playflag=false, playflag1=false, statusmsg="";
+  var posx  = 520, posy = 0;
+  var yy;
+  var xx;
+  var y;
+  var x;
+  var nombtag;
+  var codtag;
+  var bandera = 1, bandera2 = 1;
+  var nRFIDalarm, tRFIDalarm;
+  var timestamp = null,timestamp1 = null;
+  var dato, flag1,flag2,IDrespaldo,tiempo;
+  var prueba = 0;
+  var act1, act2;
+  /* Function to preload all the images, to prevent delays during play
+  */
+  var preloaded = [];
+  /*_______________________________ Fin declaracion de Variables__________________________*/
+  /*_________________________________Funciones adicionales________________________________window.setMenu(null);*/
+  function nuevoelemento(){
+      main.openWindow(1);
+  }
+  
+  function descargarregistro(){
+    main.openWindow(2);
+  }
+  
+  function permisos(){
+    main.openWindow(3);
+  }
+  function manual(){
+    main.openWindow(5);
+  }
+  
+  /*______________________________Fin funciones adicionales_______________________________*/
+  </SCRIPT>
+  
+  <SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="./funciones/cargarantenas.js"></SCRIPT>
+  <SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="./funciones/grid.js"></SCRIPT>
+   <SCRIPT src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></SCRIPT>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="./funciones/verificacion.js"></SCRIPT>
+  <SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="./funciones/funcionxy.js"></SCRIPT>
+  <SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="./funciones/comparacion.js"></SCRIPT>
+  
+  
+  <form action="/index.js" method=post name="formulario1"> 
+  <input type="text" name="px" id=px size="5" class="prueba" style="display: none"> 
+  <input type="text" name="py" id=py size="5" class="prueba1" style="display: none"> 
+  </form>
+  
+  
+  
+  </BODY>
+  </HTML>
+  
