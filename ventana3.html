@@ -1,0 +1,98 @@
+<HTML lang = "es">
+	<style type="text/css">
+		.intro { font-size:10pt; font-style:italic }
+		.heading { font-size:14pt; font-weight:bold; font-family:sans-serif }
+		.title { font-size:18pt; font-weight:bold; background-color:navy; color:white; text-align:center; font-family:sans-serif }
+	</style>
+
+	<head>
+		<link rel="stylesheet" type="text/css" href="estiloventana3.css">
+		<title>Agregar Antena</title>
+	</head>
+
+	<BODY style="background: #26c6da">
+		<br>
+        <div style="visibility: hidden">  <h3 class="dirXtext" style="font-family: Calibri, serif;">Dir en X:</h3>  </div>
+        <div style="visibility: hidden">  <h3 class="dirYtext" style="font-family: Calibri, serif;">Dir en Y:</h3>  </div>
+        <div>  <h3 class="nombretext"style="font-family: Calibri, serif;">Nombre Módulo:</h3>  </div>
+        <button type="button" id="action-btn" class="btnaceptarpos"  onclick="agregarantena()">Agregar  </button>  
+       
+        <input type="button" id="cancelar-antena" class="btncancelrps" onclick="borrarantena()" value="Cancelar" />
+        <form  name="formulario1"> 
+			<div style="visibility: hidden">
+				<input type="submint" name="px" id=px size="2" readonly="readonly" class="posxtext"> 
+			</div>
+			<div style="visibility: hidden">
+				<input type="submint" name="py" id=py size="2" readonly="readonly" class="posytext">
+			</div>  
+            <input type="text" name="nombre" id="nombre" size="15" class="nombreedit">
+            <input type="hidden"  name="idd" id="idd">
+        </form>
+	</BODY>
+	<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="./funciones/funcionxy.js"></SCRIPT>
+	<SCRIPT>
+		//___________________________________Consultamos la ultima posicion guardada_________________________
+		var xxx;
+		var yyy;
+		var nombre2;
+		var nombre1;
+		//____________________________________Consulta base de datos principal_______________________________
+		var request20 = new XMLHttpRequest();
+		request20.open('GET', 'http://seguimientoactivos.com/apiseguimiento', true); 
+		request20.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+		request20.onload = function () {
+  		// Begin accessing JSON data here
+  		var data = JSON.parse(request20.response);
+  		if (request20.status >= 200 && request20.status < 400) {
+    		data.forEach(antenas => {
+      
+       		nombre1 = antenas.cod;
+                 
+   			});
+ 	 	} 
+		}
+		request20.send();
+		//_____________________________________Fin cosulta base de datos principal______________________________
+
+		var request0 = new XMLHttpRequest();
+		request0.open('GET', 'http://seguimientoactivos.com/apitablaxyconsulta', true); 
+		request0.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+		request0.onload = function () {
+
+  		// Begin accessing JSON data here
+  		var data = JSON.parse(request0.response);
+  		if (request0.status >= 200 && request0.status < 400) {
+    		data.forEach(antenas => {
+      
+     
+      		document.formulario1.px.value = antenas.dirx;
+      		document.formulario1.py.value = antenas.diry;
+      		xxx = antenas.dirx;
+      		yyy = antenas.diry;
+            
+   			});
+ 	 	}
+		}
+
+request0.send();
+		//____________________________________Fin consulta ultima posicion guardada__________________________
+function agregarantena(){
+		//_____________________________________Consulta para agregar antena_____________________________________
+		nombre2=document.formulario1.nombre.value		
+		
+		var request10 = new XMLHttpRequest();
+    	request10.open('POST', 'http://seguimientoactivos.com/apiagregarantena/add.php', true); 
+    	request10.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+    	request10.send("antenax="+xxx+"&antenay="+yyy+"&nombreRFID="+nombre2+"&codigoantena="+nombre1);
+		//_____________________________________Fin consulta agregar antena______________________________________
+		alert("Antena agregada correctamente");
+}
+function borrarantena(){
+		document.images["pc"+yyy+"_"+xxx].src = "transparencia.png"; 
+		var window = remote.getCurrentWindow(); 
+   		window.close(); 
+}
+	</SCRIPT>
+
+
+</HTML>

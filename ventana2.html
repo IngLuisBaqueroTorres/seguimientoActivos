@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<style type="text/css">
+	.calendariop{
+		 position: absolute;
+   		 top:10%;
+   		 left: 70%;
+	}
+
+	.Gpos{
+		 position: absolute;
+   		 top:85%;
+   		 left: 73%;
+	}
+	.posantena{
+		 position: absolute;
+   		 top:7%;
+   		 left: 0.4%;
+	}
+	
+	.Cpos{
+		 position: absolute;
+   		 top:90%;
+   		 left: 73%;
+	}
+</style>
+<head>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<title>Historial</title>
+
+	<!-- link calendar resources -->
+	<link rel="stylesheet" type="text/css" href="tcal.css" />
+	<script type="text/javascript" src="tcal.js"></script> 
+</head>
+<body style="background: #26c6da">
+	<form action="#" name="formulario1">
+		<!-- add class="tcal" to your input field -->
+		
+		<input type="button" name="Descargar" class="Cpos" value="Descargar Registro" onclick="exportToExcel('table')">
+		<p class="calendariop">Seleccionar Fecha: <input type="date" name="fechaesperada">
+	</form>
+  <button name="Generar_Tabla" class="Gpos" value="Generar Tabla" onclick="G_tabla()">Generar Tabla</button>
+	 <table id="table" border=2; class="posantena">
+            <tbody>
+                
+            </tbody>
+        </table>
+</body>
+<script>
+	 const remote = require('electron').remote 
+   const main = remote.require('./main.js')
+   var mysql = require('mysql');
+  var timer1;
+//------------------------------------Actualizar nombre equipos-------------------------------------
+  
+	
+    
+    //-------------------------------------Actualizar nombre equipos----------------------------------------------------------
+   
+  var fecha;
+  var fecha1;
+  var fecha2;
+	var html = ''; 
+              	
+					html += '<tr>';
+                	html += '<td>';
+                	html += "Antena";
+                	html += '</td>';
+                	html += '<td>';
+                	html += "Equipo";
+                	html += '</td>';
+                	html += '<td>';
+                	html += "Fecha y Hora";
+                	html += '</td>';
+                	html += '</tr>';
+	function G_tabla(){
+             var request2 = new XMLHttpRequest();
+             request2.open('GET', 'http://seguimientoactivos.com/apiseguimiento_respaldo', true); 
+             request2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+             request2.onload = function () {
+              // Begin accessing JSON data here
+              var data = JSON.parse(request2.response);
+              fecha3=document.formulario1.fechaesperada.value;
+              html = ''; 
+                html += '<tr>';
+                  html += '<td>';
+                  html += "Antena";
+                  html += '</td>';
+                  html += '<td>';
+                  html += "Equipo";
+                  html += '</td>';
+                  html += '<td>';
+                  html += "Fecha y Hora";
+                  html += '</td>';
+                  html += '</tr>';
+              if (request2.status >= 200 && request2.status < 400) {
+                 data.forEach(antenas => {
+                 fecha=antenas.tiemponew;
+                 fecha1=fecha.substr(0,[10]);
+                 if(fecha1==fecha3){
+                   html += '<td>';
+                   html += antenas.nombreRFIDnew;
+                   html += '<td>';
+                   html += antenas.tagRFIDnew;
+                   html += '<td>';
+                   html += antenas.tiemponew;
+                   html += '<tr>';
+                  } 
+              
+                });
+              } 
+            }
+              request2.send();
+              document.querySelector('#table > tbody').innerHTML = html;
+              request2.close();
+            
+	}
+  document.querySelector('#table > tbody').innerHTML = html;
+
+	function exportToExcel(tableID){
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6' style='height: 75px; text-align: center; width: 250px'>";
+    var textRange; var j=0;
+    tab = document.getElementById(tableID); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++)
+    {
+
+        tab_text=tab_text;
+        tab_text=tab_text+tab.rows[j].innerHTML.toUpperCase()+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text= tab_text+"</table>";
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, ""); //remove if u want links in your table
+    tab_text= tab_text.replace(/<img[^>]*>/gi,""); //remove if u want images in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); //remove input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write( 'sep=,\r\n' + tab_text);
+        txtArea1.document.close();
+        txtArea1.focus();
+        sa=txtArea1.document.execCommand("SaveAs",true,"sudhir123.txt");
+    }
+    else {
+       sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text),'window','width=350,height=150');
+
+    }
+    
+    return (sa);
+
+}
+</script>
+</html>

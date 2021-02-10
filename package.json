@@ -1,0 +1,20 @@
+{
+  "name": "interfaz",
+  "version": "1.0.0",
+  "description": "software de rastreio de equipos medicos",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "ELON SAS",
+  "license": "SIT",
+  "dependencies": {
+    "audio-play": "^2.2.1",
+    "push.js": "^1.0.12"
+  },
+  "devDependencies": {
+    "electron": "^6.0.5",
+    "electron-packager": "^14.0.5",
+    "electron-winstaller": "^4.0.0"
+  }
+}

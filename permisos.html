@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+	<style type="text/css">
+		.intro { font-size:10pt; font-style:italic }
+		.heading { font-size:14pt; font-weight:bold; font-family:sans-serif }
+		.title { font-size:18pt; font-weight:bold; background-color:navy; color:white; text-align:center; font-family:sans-serif }
+		.bt1{
+			position: absolute;
+			top: 50%;
+			left: 5%;
+		}
+		.bt2{
+			position: absolute;
+			top: 50%;
+			left: 48%;
+		}
+		.nombreedit{
+			position: absolute;
+			top: 10%;
+			left: 35%;
+		}
+		.nombretext{
+			position: absolute;
+			top: 0%;
+			left: 5%;
+		}
+	</style>
+
+	<head>
+		<title>Asignar Permiso</title>
+	</head>
+
+	<body style="background: #26c6da">
+		<div>  <font size="5" class="nombretext"style="font-family: Calibri, serif;">Equipo:</font> </div>
+		<button onclick="Asignarpermiso()" class="bt1"> Asignar Permiso </button>
+		<button onclick="QuitarPermiso()" class="bt2"> Retirar Permiso </button>
+		<form action="./index.js" method=post name="formulario2">
+			<input type="text" name="equipooo" id="equipooo" size="12" class="nombreedit">
+		</form>
+	</body>
+	<script type="text/javascript">
+		var nombre1;
+		function Asignarpermiso(){
+			nombre1=document.formulario2.equipooo.value
+			if(nombre1 == ''){
+				alert("Por Favor ingrese el nombre del elemento al que desea darle permiso");
+				return;
+			}
+			else{
+   		 		var requesta = new XMLHttpRequest();
+  				requesta.open('POST', 'http://seguimientoactivos.com/apiasignarpermiso/add.php', true); 
+				requesta.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+				requesta.send("nombreTag="+nombre1);
+				alert("Permiso Asignado");
+			}
+   		}
+   		function QuitarPermiso(){
+   			nombre1=document.formulario2.equipooo.value
+   			if(nombre1 == ''){
+				alert("Por Favor ingrese el nombre del elemento al que desea quitarle permiso");
+				return;
+			}
+			else{
+				var request600 = new XMLHttpRequest();
+   				request600.open('POST', 'http://seguimientoactivos.com/apiretirarpermiso/borrar.php', true); 
+      			request600.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+      			request600.send("NombreTag="+nombre1);
+      			alert("Permiso Retirado");
+      		}
+   		}
+	</script>
+</html>

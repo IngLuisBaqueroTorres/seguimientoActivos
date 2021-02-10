@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .cod{
+    position: absolute;
+      top:7%;
+      left: 27%;
+    }
+
+    .cod1{
+      position: absolute;
+      top:7%;
+      left: 2.2%;
+    }
+    .ntag{
+      position: absolute;
+      top:7%;
+      left: 49%;
+    }
+    .ntag1{
+      position: absolute;
+      top:7%;
+      left: 65%;
+    }
+
+    .btn1{
+      position: absolute;
+      top:43%;
+      left: 53%;
+    }
+
+    .btn2{
+      position: absolute;
+      top:43%;
+      left: 74.5%;
+    }
+</style>
+<form name="formulario">
+    <input type="text" name="txtcod" id=txtcod size="5"  class="cod" readonly="readonly"> 
+    <input type="text" name="txttag" id=txttag size="10" class="ntag1"> 
+    <input type="button" name="btn_enviar" id=btn_enviar size="7" class="btn1" onclick="agregarmodulo()" value = "Registrar">  
+    <input type="button" name="btn_cancelar" id=btn_cancelar size="7"  class="btn2" onclick="cerrar()" value="Cancelar">
+    <div class="cod1"><b>Código Tag:</b></div>
+    <div class="ntag"><b>Equipo:</b></div>
+</form>
+
+  <title>Agregar Equipo</title>
+    <body style="background: #26c6da">
+        
+      
+       
+    </body>
+
+    <script>
+        const remote = require('electron').remote; 
+        const main = remote.require('./main.js');
+        //var mysql = require('mysql');
+        var posx, posy;
+        var campo;
+       
+       
+
+            var request12345 = new XMLHttpRequest();
+            request12345.open('GET', 'http://seguimientoactivos.com/apiseguimiento', true); 
+            request12345.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+            
+            request12345.onload = function () {
+            // Begin accessing JSON data here
+            var data = JSON.parse(request12345.response);
+            if (request12345.status >= 200 && request12345.status < 400) {
+            data.forEach(antenas => {
+              
+            document.formulario.txtcod.value=antenas.cod;
+              
+            });
+            } 
+            }
+            request12345.send(); 
+            request12345.close();
+
+        /*______________________________función boton agregar nuevo equipo________________________________*/
+      
+        function agregarmodulo(){
+            posx = document.formulario.txtcod.value;
+            posy = document.formulario.txttag.value;
+            if(posy == ''){
+                alert("por favor escoga un nombre para el equipo");
+                main.closeWindow()
+                return;
+            }
+        
+
+            
+           var request300 = new XMLHttpRequest();
+           request300.open('POST', 'http://seguimientoactivos.com/apiagregarequipo/add.php', true); 
+           request300.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+           request300.send("nombreTAG="+posy+"&codigoTAG="+posx);
+            
+           alert("Equipo agregado exitosamente");
+           //document.formulario.txttag.value = ""; 
+        
+
+        }
+        /*_______________________________fin función agregar equipo________________________________________*/
+
+      
+        function cerrar(){
+            close();
+        }
+       </script>
+</html>

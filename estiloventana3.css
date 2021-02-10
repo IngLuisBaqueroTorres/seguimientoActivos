@@ -1,0 +1,49 @@
+.dirXtext{
+             position: absolute;
+             top:0%;
+             left: 1.5%;
+        }
+
+        .dirYtext{
+             position: absolute;
+             top: 0%;
+             left: 50%;
+        }
+
+        .btnaceptarpos{
+             position: absolute;
+             top: 60%;
+             left: 51%;
+        }
+
+        .btncancelrps{
+             position: absolute;
+             top: 60%;
+             left: 75%;
+        }
+
+        .posxtext{
+             position: absolute;
+             top: 19%;
+             left: 28%;
+        }
+
+        .posytext{
+            position: absolute;
+            top: 19%;
+            left: 76.5%;
+        }
+
+        .nombretext{
+            position: absolute;
+            padding:none;
+            margin-top: 0%;
+            top:23%;
+            left: 1.5%;
+        }
+        .nombreedit{
+            position: absolute;
+            padding:none;
+            top:23%;
+            left: 51.5%;
+        }
